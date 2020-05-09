@@ -1,0 +1,99 @@
+.App {
+  min-width: 308px;
+  min-height: 235px;
+
+  width: 4.8rem;
+  height: 3.2rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgba(
+    117,
+    104,
+    104,
+    0.541
+  );
+  border-radius: 0.4rem;
+}
+.AppOutSide {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100vw;
+  height: 100vh;
+  background-image: url("http://img.fishstar.xyz//norumor/bg.jpeg");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.inputs {
+  padding-left: 0.42rem;
+  margin: 0.1rem 0;
+  width: 3.16rem;
+  height: 0.42rem;
+  border-radius: 0.21rem;
+  border: 1px solid #e6e6e6;
+  outline: none;
+
+  min-width: calc(266px - 0.42rem);
+  min-height: 31px;
+}
+
+.inputs:focus {
+  border-color: #fa911e;
+}
+.buttonLeft {
+  outline: none;
+  width: 50%;
+  height: 100%;
+  background-color: #fa911e;
+  border-top-left-radius: 0.21rem;
+  border-bottom-left-radius: 0.21rem;
+  border: none;
+  color: white;
+  font-size: 0.2rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+.buttonRight {
+  outline: none;
+  width: 50%;
+  height: 100%;
+  background-color: #c4c3c3;
+  border-top-right-radius: 0.21rem;
+  border-bottom-right-radius: 0.21rem;
+  border: none;
+  color: white;
+  font-size: 0.2rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+.buttonOutSide {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 3.6rem;
+  height: 0.42rem;
+
+  min-width: 266px;
+  min-height: 31px;
+}
+.buttonLeft:hover {
+  background-color: #f08200;
+}
+.buttonRight:hover {
+  background-color: #b6b5b5;
+}
+.centerStyle{
+  display:flex;
+  flex-direction:row;
+  justify-content:center;
+  align-items:center;
+}
