@@ -26,3 +26,12 @@ export const getUrlParam = () => {
 //密码单向加密
 //TODO:未实现加密效果。
 export const dealWithPassword=(password:string)=>password
+
+export const checkType=(type:string)=>{
+    if(type.length!==3)
+        return false;
+    for(let chr of type)
+        if(chr!=='T'&&chr!=='F')
+            return false;
+    return true;
+}

@@ -132,6 +132,16 @@ export const checkTokenWithApp = (AppID: number, userID: number) => {
     }
     return mySelect(option, "Token")
 }
+export const checkTokenWithAuthCode = (AppID: number, authCode: string) => {
+    let option = {
+        client_ID: AppID,
+        authCode:authCode,
+        token_time: {
+            $gte: new Date(),
+        },
+    }
+    return mySelect(option, "Token")
+}
 
 //插入新的Token
 export const insertNewToken = (newToken:IToken) => {
@@ -141,7 +151,7 @@ export const insertNewUser = (userInfo:IUserInfo) => {
     return myInsert(userInfo,"User")
 }
 export const insertNewApp = (AppInfo:IAppInfo) => {
-    myInsert(AppInfo,"Token")
+    return myInsert(AppInfo,"App")
 }
 
 export const createNewToken=(AppID:number,UserID:number)=>{
@@ -170,11 +180,13 @@ export const createNewUser=async(username:string,password:string)=>{
     }
     return newUser
 }
-export const createNewApp=async(AppSecret:string,AppType:string)=>{
-    let res:IStatus=await mySelect({},"App");
+export const createNewApp=async(AppSecret:string,AppType:string,AppInfo:string)=>{
+    let res:IStatus=await mySelectAll("App");
+    let newID=(res.info?.length?res.info.length:0)+1;
+    OtherUtility.myLog(`新建应用：${newID}`)
     let newApp:IAppInfo={
-        client_ID:res.info?.length||0+1,
-        client_info:"the introduction",
+        client_ID:newID,
+        client_info:AppInfo,
         client_secret:AppSecret,
         client_type:AppType
     }
@@ -182,4 +194,10 @@ export const createNewApp=async(AppSecret:string,AppType:string)=>{
 }
 export const allUserSelect=()=>{
     return mySelectAll("User")
+}
+export const allAppSelect=()=>{
+    return mySelectAll("App")
+}
+export const getUserInfo=(UserID:number)=>{
+    return mySelect({uid:UserID},"User")
 }

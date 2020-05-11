@@ -15,3 +15,12 @@ export const myLog=(data:any)=>{
         console.log(data)
     }
 }
+
+export const checkType=(type:string)=>{
+    if(type.length!==3)
+        return false;
+    for(let chr of type)
+        if(chr!=='T'&&chr!=='F')
+            return false;
+    return true;
+}

@@ -1,5 +1,6 @@
 import { ConfUtility } from "./utils"
 import {IObject} from '../type/IObject'
+import { checkType } from "./OtherUtils"
 
 export const myFetch = (way:"POST"|"GET",url: string, data?: IObject) => {
     let requestInit:RequestInit = {
@@ -21,7 +22,7 @@ export const myGet=(url:string,data:IObject)=>{
     for(let key in data){
         params.push(`${key}=${data[key]}`)
     }
-    let realUrl=`${url}?${params.join("&")}`
+    let realUrl=`${url}${params.length===0?"":"?"}${params.join("&")}`
     return myFetch("GET",realUrl)
 }
 
@@ -33,4 +34,18 @@ export const Register=(data:IObject)=>{
 }
 export const AllUser=()=>{
     return myGet(ConfUtility.getPathAllUser(),{}).then(res=>res.json())
+}
+export const AllApp=()=>{
+    return myGet(ConfUtility.getPathAllApp(),{}).then(res=>res.json())
+}
+export const AddApp=(client_info:string,client_type:string)=>{
+    let checkResult=checkType(client_type);
+    if(!checkResult){
+        alert("权限信息错误");
+        return new Promise((resolve,reject)=>{});
+    }
+    else{
+        return myPost(ConfUtility.getPathAddApp(),{client_info,client_type}).then(res=>res.json());
+    }
+
 }
