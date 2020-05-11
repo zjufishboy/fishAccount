@@ -8,7 +8,7 @@ import { StorageUtility, OtherUtility} from './utils/utils';
 //lib
 const port =8000;
 //config
-
+const perfix="/account"
 const app=express();
 app.use(cors());
 app.use(bodyParser.urlencoded({extended:false}))
@@ -19,9 +19,9 @@ app.use(bodyParser.json())
 
 
 
-app.get("/",(_req,res)=>{res.send("MyOAuth2.0:Server")})
+app.get(perfix+"/",(_req,res)=>{res.send("MyOAuth2.0:Server")})
 //登录逻辑：查看是否存在用户，不存在则报错。用户存在，查询是否存在对应的app.存在对应的app则查询是否存在对应的有效token，存在则返回，不存在则申请一个
-app.post("/login",async(req,res)=>{
+app.post(perfix+"/login",async(req,res)=>{
     let {username,password,client_ID}=req.body;
     OtherUtility.myLog(`登录：${username}:${password}`)
     let result4User:IStatus=await StorageUtility.checkUser(username,password)
@@ -71,7 +71,7 @@ app.post("/login",async(req,res)=>{
     }
 })
 
-app.get("/allUser",async(_req,res)=>{
+app.get(perfix+"/allUser",async(_req,res)=>{
     let result4AllUser=await StorageUtility.allUserSelect();
     if(!result4AllUser.status){
         OtherUtility.myLog("查询全部用户：失败")
@@ -84,7 +84,7 @@ app.get("/allUser",async(_req,res)=>{
     }
 })
 
-app.get("/allApp",async(_req,res)=>{
+app.get(perfix+"/allApp",async(_req,res)=>{
     let result4AllUser=await StorageUtility.allAppSelect();
     if(!result4AllUser.status){
         OtherUtility.myLog("查询全部应用：失败")
@@ -96,7 +96,7 @@ app.get("/allApp",async(_req,res)=>{
     }
 })
 
-app.post("/addApp",async(req,res)=>{
+app.post(perfix+"/addApp",async(req,res)=>{
     let {client_info,client_type}=req.body;
     //密钥由我们提供
     let client_secret=`${OtherUtility.createRandomString(8)}-${OtherUtility.createRandomString(4)}-${OtherUtility.createRandomString(4)}-${OtherUtility.createRandomString(4)}-${OtherUtility.createRandomString(12)}`;
@@ -114,7 +114,7 @@ app.post("/addApp",async(req,res)=>{
     }
 })
 
-app.get('/token',async(req,res)=>{
+app.get(perfix+'/token',async(req,res)=>{
     let {client_ID,client_secret,authCode}=req.query
     let AppID=parseInt(client_ID.toString());
     let AuthCode=authCode.toString()
@@ -140,7 +140,7 @@ app.get('/token',async(req,res)=>{
     res.send(responseData);
     return;
 })
-app.post('/userInfo',async(req,res)=>{
+app.post(perfix+'/userInfo',async(req,res)=>{
     let {token}=req.body
     let Token=token.toString()
 
