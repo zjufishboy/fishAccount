@@ -30,21 +30,21 @@ const AppHome = () => {
         );
     };
     const register = () => {
-      let info = OtherUtility.getUrlParam();
       let username = refusername.current?.value;
       let password = refpassword.current?.value;
-      let data={...info,username,password}
-      NetWorkUtility.Register(data)
-        .then((res: IStatus) => {
-            if (!res.status)
-              setIsErr(true);
-
-            else {
-              setIsErr(false);
-              window.location.href = `${info.redirect_uri}/callback?code=${res.info}`;
+      if(username && password)
+        NetWorkUtility.AddUser(username,password)
+          .then((res: IStatus) => {
+              if (!res.status)
+                setIsErr(true);
+              else {
+                setIsErr(false);
+                alert("注册成功");
+              }
             }
-          }
-        );
+          );
+        else
+            alert("账户或密码为空")
     };
     return (
       <div className="AppOutSide">

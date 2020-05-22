@@ -1,6 +1,6 @@
 import { ConfUtility } from "./utils"
 import {IObject} from '../type/IObject'
-import { checkType } from "./OtherUtils"
+import { checkType, checkPassword } from "./OtherUtils"
 
 export const myFetch = (way:"POST"|"GET",url: string, data?: IObject) => {
     let requestInit:RequestInit = {
@@ -46,6 +46,18 @@ export const AddApp=(client_info:string,client_type:string)=>{
     }
     else{
         return myPost(ConfUtility.getPathAddApp(),{client_info,client_type}).then(res=>res.json());
+    }
+
+}
+export const AddUser=(userName:string,password:string)=>{
+    //检测密码长度
+    let checkResult=checkPassword(password);
+    if(!checkResult){
+        alert("密码长度应超过六个英文字符");
+        return new Promise((resolve,reject)=>{});
+    }
+    else{
+        return myPost(ConfUtility.getPathAddUser(),{userName,password}).then(res=>res.json());
     }
 
 }

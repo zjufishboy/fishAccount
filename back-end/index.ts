@@ -84,6 +84,23 @@ app.get(perfix+"/allUser",async(_req,res)=>{
     }
 })
 
+app.post(perfix+"/addUser",async(req,res)=>{
+    let {userName,password}=req.body;
+    //密钥由我们提供
+    let newUser= await StorageUtility.createNewUser(userName,password)
+
+    let result=await StorageUtility.insertNewUser(newUser)
+    if(!result.status){
+        OtherUtility.myLog("插入新的用户：失败")
+        OtherUtility.myLog(`原因:${result.detail}`)
+    }
+    else{
+        OtherUtility.myLog(`插入新的用户：成功: ${result?.info?.length}条记录`)
+        result.info=undefined;
+        res.send(result);
+    }
+})
+
 app.get(perfix+"/allApp",async(_req,res)=>{
     let result4AllUser=await StorageUtility.allAppSelect();
     if(!result4AllUser.status){

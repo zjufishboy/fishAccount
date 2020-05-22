@@ -35,3 +35,8 @@ export const checkType=(type:string)=>{
             return false;
     return true;
 }
+export const checkPassword=(password:string)=>{
+    if(password.length<=6)
+        return false;
+    return true;
+}
