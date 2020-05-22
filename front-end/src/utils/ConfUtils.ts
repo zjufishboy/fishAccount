@@ -1,4 +1,4 @@
-export const env:string="debug"
+export const env:string="production"
 export const url=["http://localhost:8000/account","http://api.fishstar.xyz/account"]
 export const PathLogin="/login"
 export const PathRegister="/register"
