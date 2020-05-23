@@ -205,6 +205,28 @@ app.post(perfix+'/userInfo',async(req,res)=>{
     res.send(responseData);
     return;
 })
+app.get(`${perfix}/user/:uid`,async(req,res)=>{
+    let {uid}=req.params;
+    let UID=parseInt(uid.toString())
+    let result4User=await StorageUtility.getUserInfo(UID);
+    if(!result4User.status){
+        //用户不存在or查询出错
+        result4User.detail="用户不存在"
+        OtherUtility.myLog(`报告：${result4User.detail}:${UID}`)
+        res.send(result4User)
+        return ;
+    }
+    let responseData:IStatus={...result4User};
+    let UserName=result4User?.info?.data.username
+    if(responseData.info){
+        responseData.info.data={
+            ID:UID,
+            userName:UserName}
+        OtherUtility.myLog(`${UID}:${UserName}`)
+    }
+    res.send(responseData);
+    return;
+})
 
 //route
 
